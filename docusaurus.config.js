@@ -4,11 +4,47 @@
 // There are various equivalent ways to declare your Docusaurus config.
 // See: https://docusaurus.io/docs/api/docusaurus-config
 
-import { themes as prismThemes } from 'prism-react-renderer';
+import fs from 'node:fs/promises';
 import remarkMath from 'remark-math';
 import rehypeKatex from 'rehype-katex';
+import rehypeShiki from "@shikijs/rehype";
+import {
+  transformerMetaHighlight,
+  transformerNotationDiff,
+  transformerNotationHighlight,
+  transformerNotationFocus,
+} from "@shikijs/transformers";
+import { bundledLanguages } from "shiki";
 
-import typstRender from './src/remark/typst.js'
+import typstRender from "./src/remark/typst.js";
+
+/** @type {[import('@shikijs/rehype'), import('@shikijs/rehype').RehypeShikiOptions]} */
+const rehypeShikiPlugin = [
+  rehypeShiki,
+  {
+    themes: {
+      dark: "github-dark",
+      light: "github-light",
+    },
+    addLanguageClass: true,
+    langs: [
+      ...Object.keys(bundledLanguages),
+      // support for `typc`
+      () =>
+        fs
+          .readFile("./src/textmate-grammars/typst-code.json", "utf-8")
+          .then(JSON.parse),
+    ],
+    transformers: [
+      // Note: when adding transformers, make sure to update src/css/shiki.css
+      //       as well(they don't come with default styles)
+      transformerNotationDiff(),
+      transformerNotationHighlight(),
+      transformerNotationFocus(),
+    ],
+  },
+];
+
 
 const config = {
   title: 'CeTZ Documentation',
@@ -38,11 +74,17 @@ const config = {
           sidebarPath: './sidebars.js',
           beforeDefaultRemarkPlugins: [typstRender],
           remarkPlugins: [remarkMath],
-          rehypePlugins: [rehypeKatex],
+          rehypePlugins: [rehypeKatex, rehypeShikiPlugin],
         },
         // blog: false,
         theme: {
-          customCss: ['./src/css/custom.css', './src/css/parameter.css', './src/css/type.css', './src/css/code.css'],
+          customCss: [
+            './src/css/custom.css',
+            './src/css/parameter.css',
+            './src/css/type.css',
+            './src/css/code.css',
+            './src/css/shiki.css'
+          ],
         },
       },
     ],
@@ -62,10 +104,6 @@ const config = {
           label: 'Docs',
         },
       ],
-    },
-    prism: {
-      theme: prismThemes.github,
-      darkTheme: prismThemes.dracula,
     },
   },
   stylesheets: [

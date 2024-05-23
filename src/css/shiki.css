@@ -1,0 +1,85 @@
+[data-theme="dark"] .shiki {
+  background-color: var(--shiki-dark-bg) !important;
+}
+
+[data-theme="dark"] .shiki,
+[data-theme="dark"] .shiki span {
+  color: var(--shiki-dark) !important;
+}
+
+.shiki code {
+  /* display as flex-column to remove gap from line-breaks */
+  display: flex;
+  flex-direction: column;
+  width: min-content;
+  min-width: 100%;
+}
+
+.shiki .line:not(:last-child):empty::after {
+  /* display additional space so that empty lines don't collapse */
+  /* note that this is only visual and content does not get copied */
+  content: " ";
+}
+
+/* highlighted (transformerNotationHighlight) */
+.shiki .line.highlighted {
+  position: relative;
+  display: inline-block;
+  margin: 0 calc(var(--ifm-pre-padding) * -1);
+  padding: 0 var(--ifm-pre-padding);
+  width: calc(100% + calc(var(--ifm-pre-padding) * 2));
+}
+
+.shiki .line.highlighted {
+  background-color: var(--docusaurus-highlighted-code-line-bg);
+}
+
+/* diff (transformerNotationDiff) */
+.shiki .line.diff {
+  position: relative;
+  display: inline-block;
+  margin: 0 calc(var(--ifm-pre-padding) * -1);
+  padding: 0 var(--ifm-pre-padding);
+  width: calc(100% + calc(var(--ifm-pre-padding) * 2));
+}
+
+.shiki .line.diff::before {
+  position: absolute;
+  left: 0;
+  top: 0;
+  bottom: 0;
+  padding: 0 0.5em 0 0.3em;
+}
+
+.shiki .line.diff.add {
+  background-color: var(--shiki-diff-add-bg);
+}
+.shiki .line.diff.add::before {
+  color: var(--shiki-diff-add);
+  content: "+";
+}
+
+.shiki .line.diff.remove {
+  background-color: var(--shiki-diff-remove-bg);
+  user-select: none;
+  opacity: 0.7;
+}
+.shiki .line.diff.remove::before {
+  color: var(--shiki-diff-remove);
+  content: "-";
+}
+
+/* focus (transformerNotationFocus) */
+.shiki:has(.focused) .line:not(.focused) {
+  filter: blur(0.095rem);
+  opacity: 0.4;
+  transition: filter 0.35s, opacity 0.35s;
+}
+.shiki:has(.focused):hover .line:not(.focused) {
+  filter: blur(0);
+  opacity: 1;
+}
+
+.shiki .line.focused {
+  opacity: 1;
+}

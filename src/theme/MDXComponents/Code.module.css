@@ -1,0 +1,33 @@
+.code {
+  position: relative;
+}
+
+.button {
+  position: absolute;
+
+  display: flex;
+  align-items: center;
+
+  top: 0.5rem;
+  right: 0.5rem;
+  padding: 0.4rem;
+
+  background: var(--prism-background-color);
+  color: var(--ifm-color-emphasis-700);
+  border: 1.4px solid var(--ifm-color-emphasis-700);
+  border-radius: var(--ifm-global-radius);
+
+  line-height: 0;
+
+  opacity: 0;
+  transition: opacity var(--ifm-transition-fast) ease-in-out;
+}
+
+.code:hover .button {
+  opacity: 0.4;
+}
+
+.code:hover .button:focus-visible,
+.code:hover .button:hover {
+  opacity: 1;
+}

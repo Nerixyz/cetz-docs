@@ -15,10 +15,28 @@
   --ifm-color-primary-lightest: #3cad6e;
   --ifm-code-font-size: 95%;
   --docusaurus-highlighted-code-line-bg: rgba(0, 0, 0, 0.1);
+
+  --shiki-dark: var(--ifm-pre-color);
+  --shiki-dark-bg: #282a36;
+
+  --shiki-diff-opacity: 0.14;
+  --shiki-diff-add-rgb: 16, 185, 129;
+  --shiki-diff-add-bg: rgba(
+    var(--shiki-diff-add-rgb),
+    var(--shiki-diff-opacity)
+  );
+  --shiki-diff-add: rgb(var(--shiki-diff-add-rgb));
+
+  --shiki-diff-remove-rgb: 244, 63, 94;
+  --shiki-diff-remove-bg: rgba(
+    var(--shiki-diff-remove-rgb),
+    var(--shiki-diff-opacity)
+  );
+  --shiki-diff-remove: rgb(var(--shiki-diff-remove-rgb));
 }
 
 /* For readability concerns, you should choose a lighter palette in dark mode. */
-[data-theme='dark'] {
+[data-theme="dark"] {
   --ifm-color-primary: #25c2a0;
   --ifm-color-primary-dark: #21af90;
   --ifm-color-primary-darker: #1fa588;
@@ -27,4 +45,5 @@
   --ifm-color-primary-lighter: #32d8b4;
   --ifm-color-primary-lightest: #4fddbf;
   --docusaurus-highlighted-code-line-bg: rgba(0, 0, 0, 0.3);
+  --shiki-diff-opacity: 0.16;
 }
